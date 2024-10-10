@@ -35,6 +35,8 @@ class DataProcessor():
             for line in infile:
                 sample = json.loads(line) 
                 qid = sample['qid']
+                if qid not in qid_to_question:
+                    continue
                 question = qid_to_question[qid].lower()
 
                 docid = sample['docid']

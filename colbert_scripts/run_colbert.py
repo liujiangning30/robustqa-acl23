@@ -137,7 +137,7 @@ def main():
         query_dir = os.path.join(dataroot, dataset, 'questions.%s.tsv' % datasplit)
 
     if args.index:
-        with Run().context(RunConfig(nranks=4, experiment=dataset)):
+        with Run().context(RunConfig(nranks=1, experiment=dataset)):
             config = ColBERTConfig(
                 nbits=2,
             )
@@ -148,13 +148,18 @@ def main():
         with Run().context(RunConfig(experiment=dataset)):
             queries = Queries(query_dir)
             searcher = Searcher(index=index_name)
+            # searcher.collection(id)
             results = searcher.search_all(queries, k=100)
             save_file = f"{args.dataset}-{datasplit}-ranking.tsv"
             results.save(save_file)
 
     if args.eval:
         datadir = f'{dataroot}{dataset}/'
-
+        if '/**/' in args.ranking_file:
+            import glob
+            matched_files = glob.glob(args.ranking_file, recursive=True)
+            assert matched_files
+            args.ranking_file = matched_files[-1]
         results = pd.read_csv(args.ranking_file, sep='\t', header=None)
         results.columns = ['qid', 'pid', 'rank', 'score']
 

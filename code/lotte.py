@@ -33,7 +33,7 @@ class LoTTE(DataProcessor):
     def load_questions(self):
         qid_to_question = {}
 
-        dataset = self.root.split('/')[1]
+        dataset = self.root.split('/')[-2]
         split = self.root.split('/')[-1]
         questions = pd.read_csv(f'{self.root}/questions.forum.tsv', sep='\t', header=None)
         questions.columns = ['r', 'question']

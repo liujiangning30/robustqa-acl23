@@ -159,7 +159,7 @@ Running ColBERTv2 consists of four steps,
 python colbert_scripts/run_colbert.py \
     --dataroot ${COLBERT}/data/ \
     --dataset  ${dataset}
-    --model $COLBERT/downloads/colbertv2.0 \
+    --model /cpfs01/user/liujiangning/.cache/huggingface/hub/models--colbert-ir--colbertv2.0/snapshots/c1e84128e85ef755c096a95bdb06b47793b13acf \
     --index
 ```
 3. Search top passages
